@@ -5,11 +5,7 @@ var kartyaBox = document.createElement("div");
 var pontokBox = document.createElement("div");
 var tabla = document.createElement("div");
 var korokBox = document.createElement("div");
-// - tölts be egy képet az első cellába
-// - véletlenszerűen válassz ki egy képet és tedd az első cellába
-// - véletlen helyre helyezd el a véletlen kiválasztott képet
-// - paraméter segítségével megadott darabszámú képet helyezz el, véletlen helyre.
-//id-val kell megszámozni a cellákat
+
 function JatekterBetoltes()
 {
     balPanel.appendChild(kartyaBox);

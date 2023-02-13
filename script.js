@@ -53,13 +53,20 @@ function TablaGeneralas()
 
 function TablaFeltoltes(db)
 {
+    var tomb = new Array();
     console.log("kapcsolat");
     for(var i = 0;i<db;i++)
     {
         var kep = document.createElement("img");
         kep.src = "kepek/Lapok/"+Math.floor(Math.random()*23+1)+".jpg";
         var velcella = Math.floor(Math.random()*30+1);
+        
+        while(tomb.includes(velcella))
+        {
+            var velcella = Math.floor(Math.random()*30+1);
+        }
         var cella = document.getElementById(velcella);
+        tomb.push(velcella);
         cella.appendChild(kep);
     }
 
@@ -70,6 +77,7 @@ function Main()
     JatekterBetoltes();
     JatekterElrendezes();
     TablaGeneralas();
-    TablaFeltoltes(5);
+    TablaFeltoltes(23);
+    //hf maradék mezőt tornyokkal feltölteni
 }
 Main();

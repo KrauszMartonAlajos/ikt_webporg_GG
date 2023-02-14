@@ -60,7 +60,7 @@ function TablaFeltoltes(db)
         var kep = document.createElement("img");
         kep.src = "kepek/Lapok/"+Math.floor(Math.random()*23+1)+".jpg";
         var velcella = Math.floor(Math.random()*30+1);
-        
+        var varak = Math.floor(Math.random()*3+1);
         while(tomb.includes(velcella))
         {
             var velcella = Math.floor(Math.random()*30+1);
@@ -69,7 +69,31 @@ function TablaFeltoltes(db)
         tomb.push(velcella);
         cella.appendChild(kep);
     }
+    Varak(tomb);
+}
 
+function Varak(tomb)
+{
+    var vlista = new Array();
+    var darab = 7;
+    var szinek = ["kek","piros","zold","sarga"]
+    var i = 0;
+    while(i<darab)
+    {
+        var random = Math.floor(Math.random()*30+1);
+        var random2 = Math.floor(Math.random()*4+1);
+        var varak = Math.floor(Math.random()*3+1);
+        if(!tomb.includes(random) && !vlista.includes(random))
+        {
+            vlista.push(random);
+            var kep = document.createElement("img");
+            kep.src = "kepek/tornyok/"+szinek[varak]+"/"+random2+".png";
+            var cella = document.getElementById(random);
+            cella.appendChild(kep);
+            i++
+        }
+    }
+    
 }
 
 function Main()

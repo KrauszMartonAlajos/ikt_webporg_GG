@@ -54,11 +54,13 @@ function TablaGeneralas()
 function TablaFeltoltes(db)
 {
     var tomb = new Array();
+    var felhasznaltak = new Array();
     console.log("kapcsolat");
     for(var i = 0;i<db;i++)
     {
         var kep = document.createElement("img");
-        kep.src = "kepek/Lapok/"+Math.floor(Math.random()*23+1)+".jpg";
+        var velkep = Math.floor(Math.random()*23+1);
+        kep.src = "kepek/Lapok/"+velkep+".png";
         var velcella = Math.floor(Math.random()*30+1);
         var varak = Math.floor(Math.random()*3+1);
         while(tomb.includes(velcella))
@@ -67,9 +69,11 @@ function TablaFeltoltes(db)
         }
         var cella = document.getElementById(velcella);
         tomb.push(velcella);
+        felhasznaltak.push(velkep);
         cella.appendChild(kep);
     }
     Varak(tomb);
+    SorKiszamolas(felhasznaltak);
 }
 
 function Varak(tomb)
@@ -94,6 +98,21 @@ function Varak(tomb)
         }
     }
     
+}
+
+function SorKiszamolas(klista){
+    var SorSzamolas = document.createElement("div");
+    SorSzamolas.id = "SorSzamolas";
+    document.body.appendChild(SorSzamolas);
+    var ertekLista = [1,1,-1,2,-2,-2,2,3,3,-3,4,4,-4,5,5,-5,6,6,-6,0,0,0,0];
+    var db = 0;
+    for(let i = 0; i < Object.keys(klista).length;i++){
+        db += ertekLista[klista[i]-1];
+        if(i % 5 == 0 || i == klista.lenght-1){
+            console.log(db);
+            db = 0;
+        }
+    }
 }
 
 function Main()

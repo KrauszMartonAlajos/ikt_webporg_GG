@@ -9,7 +9,50 @@ var korokBox = document.createElement("div");
 // - véletlenszerűen válassz ki egy képet és tedd az első cellába
 // - véletlen helyre helyezd el a véletlen kiválasztott képet
 // - paraméter segítségével megadott darabszámú képet helyezz el, véletlen helyre.
-//id-val kell megszámozni a cellákat
+//id-val kell megszámozni a cellákatű
+var lapok = new Array[
+{id:1,value:1,sign:''},
+{id:2,value:1,sign:''},
+{id:3,value:-1,sign:''},
+{id:4,value:2,sign:''},
+{id:5,value:-2,sign:''},
+{id:6,value:-2,sign:''},
+{id:7,value:2,sign:''},
+{id:8,value:3,sign:''},
+{id:9,value:3,sign:''},
+{id:10,value:-3,sign:''},
+{id:11,value:4,sign:''},
+{id:12,value:4,sign:''},
+{id:13,value:-4,sign:''},
+{id:14,value:5,sign:''},
+{id:15,value:5,sign:''},
+{id:16,value:-5,sign:''},
+{id:17,value:6,sign:''},
+{id:18,value:6,sign:''},
+{id:19,value:6,sign:''},
+{id:20,value:0,sign:'varazslo'},
+{id:21,value:0,sign:'hegy'},
+{id:22,value:0,sign:'taliga'},
+{id:23,value:0,sign:'sarkany'}];
+
+var varak = new Array[
+{id:1,value:1},
+{id:2,value:2},
+{id:3,value:3},
+{id:4,value:4},
+{id:5,value:1},
+{id:6,value:2},
+{id:7,value:3},
+{id:8,value:4},
+{id:9,value:1},
+{id:10,value:2},
+{id:11,value:3},
+{id:12,value:4},
+{id:13,value:1},
+{id:14,value:2},
+{id:15,value:3},
+{id:16,value:4}];
+
 function JatekterBetoltes()
 {
     balPanel.appendChild(kartyaBox);
@@ -60,20 +103,25 @@ function TablaFeltoltes(db)
     {
         var kep = document.createElement("img");
         var velkep = Math.floor(Math.random()*23+1);
-        kep.src = "kepek/Lapok/"+velkep+".png";
+       
         var velcella = Math.floor(Math.random()*30+1);
         var varak = Math.floor(Math.random()*3+1);
         while(tomb.includes(velcella))
         {
-            var velcella = Math.floor(Math.random()*30+1);
+            velcella = Math.floor(Math.random()*30+1);
         }
         var cella = document.getElementById(velcella);
         tomb.push(velcella);
-        felhasznaltak.push(velkep);
+        while(felhasznaltak.includes(velkep))
+        {
+            velkep = Math.floor(Math.random()*23+1);
+        }
+        felhasznaltak.push(velkep);  
+        kep.src = "kepek/Lapok/"+velkep+".png";      
         cella.appendChild(kep);
     }
     Varak(tomb);
-    SorKiszamolas(felhasznaltak);
+    //SorKiszamolas(felhasznaltak);
 }
 
 function Varak(tomb)
@@ -100,20 +148,20 @@ function Varak(tomb)
     
 }
 
-function SorKiszamolas(klista){
-    var SorSzamolas = document.createElement("div");
-    SorSzamolas.id = "SorSzamolas";
-    document.body.appendChild(SorSzamolas);
-    var ertekLista = [1,1,-1,2,-2,-2,2,3,3,-3,4,4,-4,5,5,-5,6,6,-6,0,0,0,0];
-    var db = 0;
-    for(let i = 0; i < Object.keys(klista).length;i++){
-        db += ertekLista[klista[i]-1];
-        if(i % 5 == 0 || i == klista.lenght-1){
-            console.log(db);
-            db = 0;
-        }
-    }
-}
+// function SorKiszamolas(klista){
+//     var SorSzamolas = document.createElement("div");
+//     SorSzamolas.id = "SorSzamolas";
+//     document.body.appendChild(SorSzamolas);
+//     var ertekLista = [1,1,-1,2,-2,-2,2,3,3,-3,4,4,-4,5,5,-5,6,6,-6,0,0,0,0];
+//     var db = 0;
+//     for(let i = 0; i < Object.keys(klista).length;i++){
+//         db += ertekLista[klista[i]-1];
+//         if(i % 5 == 0 || i == klista.lenght-1){
+//             console.log(db);
+//             db = 0;
+//         }
+//     }
+// }
 
 function Main()
 {

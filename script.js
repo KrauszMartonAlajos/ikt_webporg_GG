@@ -10,7 +10,7 @@ var korokBox = document.createElement("div");
 // - véletlen helyre helyezd el a véletlen kiválasztott képet
 // - paraméter segítségével megadott darabszámú képet helyezz el, véletlen helyre.
 //id-val kell megszámozni a cellákatű
-var lapok = new Array[
+var lapoktomb =[
 {id:1,value:1,sign:''},
 {id:2,value:1,sign:''},
 {id:3,value:-1,sign:''},
@@ -35,7 +35,7 @@ var lapok = new Array[
 {id:22,value:0,sign:'taliga'},
 {id:23,value:0,sign:'sarkany'}];
 
-var varak = new Array[
+var varaktomb =[
 {id:1,value:1},
 {id:2,value:2},
 {id:3,value:3},

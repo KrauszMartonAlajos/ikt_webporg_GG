@@ -20,7 +20,7 @@ function JatekterBetoltes()
 
     kartyaBox.innerHTML = "kartyaBox";
     pontokBox.innerHTML = "pontokBox";
-    tabla.innerHTML = "tabla";
+    //tabla.innerHTML = "tabla";
     korokBox.innerHTML = "korokBox";
 }
 function JatekterElrendezes()

@@ -1,6 +1,6 @@
+
+
 var Jatekter=document.getElementById("jatekter");
-
-
 var Balpanel=document.createElement("div");
 var Kartyabox=document.createElement("div");
 var Pontokbox=document.createElement("div");
@@ -38,7 +38,7 @@ function TablaGeneralas()
 
     
 
-    var k=0;
+    var k=1;
     for (var i = 0; i < 5; i++) 
     {
         var sorDiv=document.createElement("div");
@@ -48,8 +48,8 @@ function TablaGeneralas()
             var oszlopDiv=document.createElement("div");
             oszlopDiv.classList+=" oszlopdiv";
             oszlopDiv.id=k;
-            k++;
             sorDiv.appendChild(oszlopDiv);
+            k++;
         }
         tabla.appendChild(sorDiv);
         
@@ -63,18 +63,8 @@ function TablaGeneralas()
 function TablaFeltotles(db)
 {
     
-    var tomb= new Array();
-    var tomb2=new Array();
-    // HF:
-    // Tölts be egy képet az első cellába
-    // véletlenszerűen válassz ki egy képet és tedd az első cellába
-    // véletlen helyre helyezd el a véletlen kiválasztott képet
-    // paraméter segítségével megadott darabszámú képet helyezz el, véletlen helyre.
-
-    
-    // Generáld ki a 23 képet a 30 helyre, a maradékra pedig véletlen tornyokat tegyél
-     
-    for (var i = 0; i < db; i++)
+/*
+for (var i = 0; i < db; i++)
     {
         var random=Math.floor(Math.random()*23+1);
         var random2=Math.floor(Math.random()*29+1);
@@ -97,18 +87,40 @@ function TablaFeltotles(db)
         var cella=document.getElementById(Uccso[j]);
         cella.appendChild(kep);
         
+*/    
+
+
+
+    // HF:
+    // Tölts be egy képet az első cellába
+    // véletlenszerűen válassz ki egy képet és tedd az első cellába
+    // véletlen helyre helyezd el a véletlen kiválasztott képet
+    // paraméter segítségével megadott darabszámú képet helyezz el, véletlen helyre.
+
+    
+    // Generáld ki a 23 képet a 30 helyre, a maradékra pedig véletlen tornyokat tegyél
+     
+   
+    var tomb = new Array();
+    for(var i = 0;i<db;i++)
+    {
+        var kep = document.createElement("img");
+        kep.src = "kepek/"+Math.floor(Math.random()*23+1)+".jpg";
+        var velcella = Math.floor(Math.random()*30+1);
+        
+        while(tomb.includes(velcella))
+        {
+            var velcella = Math.floor(Math.random()*30+1);
+        }
+        var cella = document.getElementById(velcella);
+        tomb.push(velcella);
+        cella.appendChild(kep);
     }
 
     
-
-        
-
-    
-    
-   
-    
 }
 
+// HF: dizájn+pontok
 
 
 
@@ -123,5 +135,4 @@ function Main()
 }
 
 Main();
-
 

@@ -100,16 +100,40 @@ function TablaGeneralas()
 
 function CellakFeltoltese()
 {
-    for(var i = 0;i<23;i++)
+    var cella_lista = new Array();
+    var r = Math.floor(Math.random()*23);
+    for(let i = 0;i<23;i++)
     {   
+        while(cella_lista.includes(r)){
+            r = Math.floor(Math.random()*23);
+        }
         cellak[i].type = "kártya";
         cellak[i].kartya = kartyaAdatok[i];
+        cella_lista.push(r);
     }
+    console.log(cella_lista);
+    var cella_lista_b = new Array();
+    r = Math.floor(Math.random()*16);
     for(var i = 23;i<30;i++)
     {
+        while(cella_lista_b.includes(r)){
+            r = Math.floor(Math.random()*16);
+        }
         cellak[i].type = "vár";
         cellak[i].kartya = varAdatok[i-23];
+        cella_lista_b.push(r);
     }
+    console.log(cella_lista_b);
+}
+
+function CellakMegjelenitese(){
+    var cella = cellak[0];
+    console.log(cella);
+    var div = document.getElementById(1);
+    var kep = document.createElement("img");
+    kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
+    div.appendChild(kep);
+
 }
 
 //Házi feladat
@@ -123,6 +147,7 @@ function Main()
     JatekterElrendezes();
     TablaGeneralas();
     CellakFeltoltese();
+    CellakMegjelenitese();
 }
 
 Main();

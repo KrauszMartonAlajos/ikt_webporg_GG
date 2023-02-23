@@ -127,19 +127,49 @@ function CellakFeltoltese()
 }
 
 function CellakMegjelenitese(){
-    var cella = cellak[0];
-    console.log(cella);
-    var div = document.getElementById(1);
-    var kep = document.createElement("img");
-    kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
-    div.appendChild(kep);
+    var tomb = new Array();
+    for(var i = 0;i<23;i++)
+    {       
+        var r  = Math.floor(Math.random()*30);
+        while(tomb.includes(r))
+        {
+            r  = Math.floor(Math.random()*30);
+        }
+        var cella = cellak[i];
+        console.log(cella);
+        var div = document.getElementById(r+1);
+        var kep = document.createElement("img");
+        kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
+        tomb.push(r);
+        div.appendChild(kep);
+    }
+
+    // {
+    //     var tomb = new Array();
+    //     var felhasznaltak = new Array();
+    //     console.log("kapcsolat");
+    //     for(var i = 0;i<23;i++)
+    //     {
+    //         var kep = document.createElement("img");
+    //         var velkep = Math.floor(Math.random()*23+1);        
+    //         var velcella = Math.floor(Math.random()*30+1);
+    //         while(tomb.includes(velcella))
+    //         {
+    //             velcella = Math.floor(Math.random()*30+1);
+    //         }
+    //         var cella = document.getElementById(velcella);
+    //         tomb.push(velcella);
+    //         while(felhasznaltak.includes(velkep))
+    //         {
+    //             velkep = Math.floor(Math.random()*23+1);
+    //         }
+    //         felhasznaltak.push(velkep);  
+    //         kep.src = "kepek/Lapok/"+cella.kartya.id+".png";      
+    //         cella.appendChild(kep);
+    //     }
+    // }
 
 }
-
-//Házi feladat
-//feltöltést átírni hogy minden kártyából véletlenszerűen egy kerüljön be a tömbbe.
-//a tömb alapján jelenítsd meg a képeket
-
 
 function Main()
 {

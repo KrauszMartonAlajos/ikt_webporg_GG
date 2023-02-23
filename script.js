@@ -57,6 +57,8 @@ var cellak = [
 //     }
 ];
 
+var varak = [];
+
 function JatekterBetoltes()
 {
     balPanel.appendChild(kartyaBox);
@@ -128,7 +130,7 @@ function CellakFeltoltese()
 
 function CellakMegjelenitese(){
     var tomb = new Array();
-    for(var i = 0;i<23;i++)
+    for(var i = 0;i<30;i++)
     {       
         var r  = Math.floor(Math.random()*30);
         while(tomb.includes(r))
@@ -139,36 +141,17 @@ function CellakMegjelenitese(){
         console.log(cella);
         var div = document.getElementById(r+1);
         var kep = document.createElement("img");
-        kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
-        tomb.push(r);
+        if(cella.type == "kártya"){
+
+            kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
+        }
+        else{
+            var r1 = Math.floor(Math.random()*16+1)
+            kep.src = "kepek/tornyok/"+r1+".png";
+        }
         div.appendChild(kep);
+        tomb.push(r);
     }
-
-    // {
-    //     var tomb = new Array();
-    //     var felhasznaltak = new Array();
-    //     console.log("kapcsolat");
-    //     for(var i = 0;i<23;i++)
-    //     {
-    //         var kep = document.createElement("img");
-    //         var velkep = Math.floor(Math.random()*23+1);        
-    //         var velcella = Math.floor(Math.random()*30+1);
-    //         while(tomb.includes(velcella))
-    //         {
-    //             velcella = Math.floor(Math.random()*30+1);
-    //         }
-    //         var cella = document.getElementById(velcella);
-    //         tomb.push(velcella);
-    //         while(felhasznaltak.includes(velkep))
-    //         {
-    //             velkep = Math.floor(Math.random()*23+1);
-    //         }
-    //         felhasznaltak.push(velkep);  
-    //         kep.src = "kepek/Lapok/"+cella.kartya.id+".png";      
-    //         cella.appendChild(kep);
-    //     }
-    // }
-
 }
 
 function Main()

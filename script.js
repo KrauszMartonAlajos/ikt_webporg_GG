@@ -25,7 +25,7 @@ var kartyaAdatok =[
 {id:16,value:-5,sign:''},
 {id:17,value:6,sign:''},
 {id:18,value:6,sign:''},
-{id:19,value:6,sign:''},
+{id:19,value:-6,sign:''},
 {id:20,value:0,sign:'varazslo'},
 {id:21,value:0,sign:'hegy'},
 {id:22,value:0,sign:'taliga'},
@@ -35,11 +35,11 @@ var varAdatok =[
 {id:1,color:1,value:1},
 {id:2,color:1,value:2},
 {id:3,color:1,value:3},
-{id:4,color:1,value:4},
+{id:4,color:1,value:4}, 
 {id:5,color:2,value:1},
 {id:6,color:2,value:2},
 {id:7,color:2,value:3},
-{id:8,color:2,value:4},
+{id:8,color:2,value:4}, 
 {id:9,color:3,value:1},
 {id:10,color:3,value:2},
 {id:11,color:3,value:3},
@@ -111,12 +111,11 @@ function CellakFeltoltese()
     }
     for(var i = 23;i<30;i++)
     {
+		var ran = Math.floor(Math.random()*16)
         cellak[i].type = "vár";
-        cellak[i].kartya = varAdatok[i-23];
+        cellak[i].kartya = varAdatok[ran];
     }
-    //shuffleArray(cellak);
 }
-
 //cellák tömb megkeverése
 function shuffleArray(cellak) {
     for (var i = cellak.length - 1; i > 0; i--) {
@@ -138,12 +137,41 @@ function CellakMegjelenitese(){
             kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
         }
         else{
-            var r1 = Math.floor(Math.random()*16+1)
-            kep.src = "kepek/tornyok/"+r1+".png";
+            kep.src = "kepek/tornyok/"+cella.kartya.id+".png";
         }
         div.appendChild(kep);
     }
     console.log(cellak);
+}
+
+function SorOsszeg(cellak){
+	pontokBox.innerHTML += "<br>";
+	for(var i = 0;i<30;i+=6)
+    {   
+		var sor = 0; 
+		for(var j = i;j<i+6;j++){
+			var cella = cellak[j];
+			sor += cella.kartya.value;
+		}
+		var span = document.createElement("span");
+		span.innerHTML = sor+", ";		
+		pontokBox.appendChild(span);
+    }
+}
+
+function OszlopOsszeg(cellak){
+	pontokBox.innerHTML += "<br>";
+	for(var i = 0;i<6;i++)
+    {   
+		var oszlop = 0; 
+		for(var j = i;j<30;j+=6){
+			var cella = cellak[j];
+			oszlop += cella.kartya.value;
+		}
+		var span = document.createElement("span");
+		span.innerHTML = oszlop+", ";
+		pontokBox.appendChild(span);
+    }
 }
 
 function Main()
@@ -154,6 +182,8 @@ function Main()
     CellakFeltoltese();
     shuffleArray(cellak);
     CellakMegjelenitese();
+	SorOsszeg(cellak);
+	OszlopOsszeg(cellak);
 }
 
 Main();

@@ -59,6 +59,8 @@ var cellak = [
 
 var varak = [];
 
+var valasztottkartya;
+
 function JatekterBetoltes()
 {
     balPanel.appendChild(kartyaBox);
@@ -66,9 +68,12 @@ function JatekterBetoltes()
     jatekTer.appendChild(balPanel);
     jatekTer.appendChild(tabla);
     jatekTer.appendChild(korokBox);
+    // jatekTer.appendChild(kartyaTarto);
     kartyaBox.innerHTML = "kartyaBox";
     pontokBox.innerHTML = "pontokBox";
     korokBox.innerHTML = "korokBox";
+    
+
 }
 function JatekterElrendezes()
 {
@@ -90,6 +95,7 @@ function TablaGeneralas()
             var oszlopDiv = document.createElement("div");
             oszlopDiv.classList += " oszlopdiv";
             oszlopDiv.id = k;
+            oszlopDiv.setAttribute("onclick","Lerak(this)");
             cellak.push({id:k});
 
             k++;
@@ -174,6 +180,40 @@ function OszlopOsszeg(cellak){
     }
 }
 
+function KartyakBetetele(){
+    var div = document.getElementById("kartyaTarto");
+    for(var i = 0;i<23;i++)
+    {    
+        var kep = document.createElement("img");
+        kep.setAttribute("onclick","Kivalasztas(this)");
+        kep.className = "alsokep";
+        kep.id = kartyaAdatok[i].id;
+        kep.src = "kepek/Lapok/"+kartyaAdatok[i].id+".png";       
+        div.appendChild(kep);
+    }
+    for(var i = 0;i<16;i++)
+    {    
+        var kep = document.createElement("img");
+        kep.className = "alsokep";
+        kep.id = varAdatok[i].id;
+        kep.src = "tornyok/"+varAdatok[i].id+".png";       
+        div.appendChild(kep);
+    }
+
+}
+
+function Kivalasztas(kikep){
+    valasztottkartya = kikep;
+}
+
+function Lerak(vmezo){
+    valasztottkartya.className = "";
+    valasztottkartya.onclick = "";
+    vmezo.appendChild(valasztottkartya);
+    valasztottkartya = undefined;
+    vmezo.onclick = "";
+}
+
 function Main()
 {
     JatekterBetoltes();
@@ -181,9 +221,10 @@ function Main()
     TablaGeneralas();
     CellakFeltoltese();
     shuffleArray(cellak);
-    CellakMegjelenitese();
+    //CellakMegjelenitese();
 	SorOsszeg(cellak);
 	OszlopOsszeg(cellak);
+    KartyakBetetele();
 }
 
 Main();

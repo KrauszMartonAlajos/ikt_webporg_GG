@@ -58,7 +58,7 @@ var cellak = [
 ];
 
 var varak = [];
-
+var lepes = 0;
 var valasztottkartya;
 
 function JatekterBetoltes()
@@ -181,36 +181,54 @@ function OszlopOsszeg(cellak){
 }
 
 function KartyakBetetele(){
+    var div = document.getElementById("kartyaTarto"); 
+    var kep = document.createElement("img");
+    kep.setAttribute("onclick","Kivalasztas(this)");
+    kep.className = "alsokep";
+    kep.id = kartyaAdatok[valasztottkartya].id;
+    //kep.src = "kepek/Lapok/"+kartyaAdatok[i].id+".png";       
+    div.appendChild(kep);   
+    var kep = document.createElement("img");
+    kep.className = "alsokep";
+    kep.id = varAdatok[i].id;
+    //kep.src = "kepek/tornyok/"+varAdatok[i].id+".png";       
+    div.appendChild(kep);
+    }
+
+function Palki_es_funkcioja(){
+    var div = document.getElementById("kartyabox");
+    var kep = document.createElement("img");
+    kep.id = "pakli";
+    kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
+    kep.src = "kepek/leforditott_kartya.jpg";
+    div.appendChild(kep);
+}
+
+function RandomKartyaGeneralas() { 
+    
+    console.log("kattintás regisztrálva:");
+    var valkep = document.createElement("img");
+    if (lepes > 22) { 
+        console.log("ennyi kartya volt");
+        var kep = document.getElementById("pakli");
+        kep.onclick = "";
+    }
     var div = document.getElementById("kartyaTarto");
-    for(var i = 0;i<23;i++)
-    {    
-        var kep = document.createElement("img");
-        kep.setAttribute("onclick","Kivalasztas(this)");
-        kep.className = "alsokep";
-        kep.id = kartyaAdatok[i].id;
-        kep.src = "kepek/Lapok/"+kartyaAdatok[i].id+".png";       
-        div.appendChild(kep);
-    }
-    for(var i = 0;i<16;i++)
-    {    
-        var kep = document.createElement("img");
-        kep.className = "alsokep";
-        kep.id = varAdatok[i].id;
-        kep.src = "tornyok/"+varAdatok[i].id+".png";       
-        div.appendChild(kep);
-    }
-
+    valkep.className = "kicsi";
+    valasztottkartya = cellak[lepes];
+    valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
+    div.appendChild(valkep);
+    lepes++;
+    console.log(lepes);
 }
 
-function Kivalasztas(kikep){
-    valasztottkartya = kikep;
-}
+function Lerak(vmezo) {
+    var valkep = document.createElement("img");
+    valkep.src = "kepek/Lapok/" + valasztottkartya.kartya.id + ".png";
 
-function Lerak(vmezo){
-    valasztottkartya.className = "";
-    valasztottkartya.onclick = "";
-    vmezo.appendChild(valasztottkartya);
+    vmezo.appendChild(valkep);
     valasztottkartya = undefined;
+    
     vmezo.onclick = "";
 }
 
@@ -222,8 +240,9 @@ function Main()
     CellakFeltoltese();
     shuffleArray(cellak);
     //CellakMegjelenitese();
-	SorOsszeg(cellak);
-	OszlopOsszeg(cellak);
+	//SorOsszeg(cellak);
+	//OszlopOsszeg(cellak);
+    Palki_es_funkcioja();
     KartyakBetetele();
 }
 

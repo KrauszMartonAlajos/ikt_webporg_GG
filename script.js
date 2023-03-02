@@ -60,6 +60,7 @@ var cellak = [
 var varak = [];
 var lepes = 0;
 var valasztottkartya;
+var felhuzva = false;
 
 function JatekterBetoltes()
 {
@@ -196,39 +197,51 @@ function KartyakBetetele(){
     }
 
 function Palki_es_funkcioja(){
-    var div = document.getElementById("kartyabox");
-    var kep = document.createElement("img");
-    kep.id = "pakli";
-    kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
-    kep.src = "kepek/leforditott_kartya.jpg";
-    div.appendChild(kep);
+    if(felhuzva == false)
+    {
+        var div = document.getElementById("kartyabox");
+        var kep = document.createElement("img");
+        kep.id = "pakli";
+        kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
+        kep.src = "kepek/leforditott_kartya.jpg";
+        div.appendChild(kep);
+    }
+    
 }
 
 function RandomKartyaGeneralas() { 
-    
-    console.log("kattintás regisztrálva:");
-    var valkep = document.createElement("img");
-    if (lepes > 22) { 
-        console.log("ennyi kartya volt");
-        var kep = document.getElementById("pakli");
-        kep.onclick = "";
+    if(felhuzva == false)
+    {
+        felhuzva = true;
+        console.log("kattintás regisztrálva:");
+        felhuzva++;
+        var valkep = document.createElement("img");
+        if (lepes > 22) { 
+            console.log("ennyi kartya volt");
+            var kep = document.getElementById("pakli");
+            kep.onclick = "";
+        }
+        var div = document.getElementById("kartyaTarto");
+        valkep.className = "kicsi";
+        valasztottkartya = cellak[lepes];
+        valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
+        div.appendChild(valkep);
+        
+        lepes++;
+        console.log(lepes);
     }
-    var div = document.getElementById("kartyaTarto");
-    valkep.className = "kicsi";
-    valasztottkartya = cellak[lepes];
-    valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
-    div.appendChild(valkep);
-    lepes++;
-    console.log(lepes);
+    else{
+        console.log("előbb rakd le a lapodat")
+    }
+    
 }
 
 function Lerak(vmezo) {
+    felhuzva = false;
     var valkep = document.createElement("img");
     valkep.src = "kepek/Lapok/" + valasztottkartya.kartya.id + ".png";
-
-    vmezo.appendChild(valkep);
-    valasztottkartya = undefined;
-    
+    vmezo.appendChild(valkep);  
+    valasztottkartya = undefined; 
     vmezo.onclick = "";
 }
 

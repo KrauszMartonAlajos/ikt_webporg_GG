@@ -61,6 +61,7 @@ var varak = [];
 var lepes = 0;
 var valasztottkartya;
 var felhuzva = false;
+var kivalsztottlap;
 
 function JatekterBetoltes()
 {
@@ -225,6 +226,7 @@ function RandomKartyaGeneralas() {
         var div = document.getElementById("kartyaTarto");
         valkep.className = "kicsi";
         valasztottkartya = cellak[lepes];
+        kivalsztottlap = cellak[lepes];
         valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
         div.appendChild(valkep);
         
@@ -238,12 +240,29 @@ function RandomKartyaGeneralas() {
 }
 
 function Lerak(vmezo) {
+    
     felhuzva = false;
     var valkep = document.createElement("img");
-    valkep.src = "kepek/Lapok/" + valasztottkartya.kartya.id + ".png";
+    if(kivalsztottlap.type == "kártya"){
+        valkep.src = "kepek/Lapok/" + kivalsztottlap.kartya.id + ".png";
+        kivalsztottlap = undefined;
+    }
+    else{
+        console.log(kivalsztottlap.id);
+        valkep.src = "kepek/tornyok/"+(kivalsztottlap-1)+".png";
+        kivalsztottlap = undefined;
+    }
     vmezo.appendChild(valkep);  
     valasztottkartya = undefined; 
+    kivalsztottlap = undefined;
     vmezo.onclick = "";
+}
+
+function VarFelhuzas(n)
+{
+
+    kivalsztottlap = varAdatok[n].id;
+    // kivalsztottlap.className = "elrejt";
 }
 
 function VarakLe_Fel()
@@ -253,9 +272,9 @@ function VarakLe_Fel()
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(this)");
         kep.src = "kepek/tornyok/1.png";
         kep.className = "kicsi";
+        kep.setAttribute("onclick","VarFelhuzas(1)");
         div.appendChild(kep);
     }
 
@@ -263,7 +282,7 @@ function VarakLe_Fel()
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.setAttribute("onclick","VarFelhuzas(2)");
         kep.src = "kepek/tornyok/2.png";
         kep.className = "kicsi";
         div.appendChild(kep);
@@ -272,14 +291,14 @@ function VarakLe_Fel()
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.setAttribute("onclick","VarFelhuzas(3)");
         kep.src = "kepek/tornyok/3.png";
         kep.className = "kicsi";
         div.appendChild(kep);
     }
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.setAttribute("onclick","VarFelhuzas(4)");
         kep.src = "kepek/tornyok/4.png";
         kep.className = "kicsi";
         div.appendChild(kep);

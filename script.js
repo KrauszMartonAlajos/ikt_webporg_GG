@@ -97,7 +97,7 @@ function TablaGeneralas()
             oszlopDiv.classList += " oszlopdiv";
             oszlopDiv.id = k;
             oszlopDiv.setAttribute("onclick","Lerak(this)");
-            cellak.push({id:k});
+            //cellak.push({id:k});
 
             k++;
             sorDiv.appendChild(oszlopDiv);
@@ -108,19 +108,12 @@ function TablaGeneralas()
 }
 
 function CellakFeltoltese()
-{
-    var cella_lista = new Array();
-    var r = Math.floor(Math.random()*23);
-    for(let i = 0;i<23;i++)
+{    
+    for(let i = 1;i<24;i++)
     {   
-        cellak[i].type = "kártya";
-        cellak[i].kartya = kartyaAdatok[i];
-    }
-    for(var i = 23;i<30;i++)
-    {
-		var ran = Math.floor(Math.random()*16)
-        cellak[i].type = "vár";
-        cellak[i].kartya = varAdatok[ran];
+        cellak.push({id:i});
+        cellak[i-1].type = "kártya";
+        cellak[i-1].kartya = kartyaAdatok[i-1];
     }
 }
 //cellák tömb megkeverése
@@ -185,15 +178,9 @@ function KartyakBetetele(){
     var div = document.getElementById("kartyaTarto"); 
     var kep = document.createElement("img");
     kep.setAttribute("onclick","Kivalasztas(this)");
-    kep.className = "alsokep";
-    //kep.id = kartyaAdatok[valasztottkartya].id;
-    //kep.src = "kepek/Lapok/"+kartyaAdatok[i].id+".png";       
-    //div.appendChild(kep);   
+    kep.className = "alsokep";  
     var kep = document.createElement("img");
     kep.className = "alsokep";
-    //kep.id = varAdatok[i].id;
-    //kep.src = "kepek/tornyok/"+varAdatok[i].id+".png";       
-    //div.appendChild(kep);
     }
 
 function Palki_es_funkcioja(){
@@ -216,7 +203,7 @@ function RandomKartyaGeneralas() {
     {
         felhuzva = true;
         console.log("kattintás regisztrálva:");
-        felhuzva++;
+        //felhuzva++;
         var valkep = document.createElement("img");
         if (lepes > 22) { 
             console.log("ennyi kartya volt");
@@ -225,8 +212,8 @@ function RandomKartyaGeneralas() {
         }
         var div = document.getElementById("kartyaTarto");
         valkep.className = "kicsi";
-        valasztottkartya = cellak[lepes];
         kivalsztottlap = cellak[lepes];
+        console.log(kivalsztottlap);
         valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
         div.appendChild(valkep);
         
@@ -248,8 +235,8 @@ function Lerak(vmezo) {
         kivalsztottlap = undefined;
     }
     else{
-        console.log(kivalsztottlap.id);
-        valkep.src = "kepek/tornyok/"+(kivalsztottlap-1)+".png";
+        console.log(kivalsztottlap.id + "ezt kell figyelni");
+        valkep.src = "kepek/tornyok/"+(kivalsztottlap.id)+".png";
         kivalsztottlap = undefined;
     }
     vmezo.appendChild(valkep);  
@@ -260,29 +247,26 @@ function Lerak(vmezo) {
 
 function VarFelhuzas(n)
 {
-
-    kivalsztottlap = varAdatok[n].id;
-    // kivalsztottlap.className = "elrejt";
+    kivalsztottlap = varAdatok[n];
+    console.log(kivalsztottlap);
 }
 
 function VarakLe_Fel()
 {
-
     for(var i = 0;i<4;i++)
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
         kep.src = "kepek/tornyok/1.png";
         kep.className = "kicsi";
-        kep.setAttribute("onclick","VarFelhuzas(1)");
+        kep.setAttribute("onclick","VarFelhuzas(0)"); // 0 kell indítani az indexelést 
         div.appendChild(kep);
     }
-
     for(var i = 0;i<3;i++)
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(2)");
+        kep.setAttribute("onclick","VarFelhuzas(1)");
         kep.src = "kepek/tornyok/2.png";
         kep.className = "kicsi";
         div.appendChild(kep);
@@ -291,20 +275,18 @@ function VarakLe_Fel()
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(3)");
+        kep.setAttribute("onclick","VarFelhuzas(2)");
         kep.src = "kepek/tornyok/3.png";
         kep.className = "kicsi";
         div.appendChild(kep);
     }
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(4)");
+        kep.setAttribute("onclick","VarFelhuzas(3)");
         kep.src = "kepek/tornyok/4.png";
         kep.className = "kicsi";
         div.appendChild(kep);
-
     console.log("ez egy hulladék fos?");
-
 }
 
 function Main()

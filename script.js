@@ -70,7 +70,6 @@ function JatekterBetoltes()
     jatekTer.appendChild(tabla);
     jatekTer.appendChild(korokBox);
     // jatekTer.appendChild(kartyaTarto);
-    kartyaBox.innerHTML = "kartyaBox";
     pontokBox.innerHTML = "pontokBox";
     korokBox.innerHTML = "korokBox";
     
@@ -186,14 +185,14 @@ function KartyakBetetele(){
     var kep = document.createElement("img");
     kep.setAttribute("onclick","Kivalasztas(this)");
     kep.className = "alsokep";
-    kep.id = kartyaAdatok[valasztottkartya].id;
+    //kep.id = kartyaAdatok[valasztottkartya].id;
     //kep.src = "kepek/Lapok/"+kartyaAdatok[i].id+".png";       
-    div.appendChild(kep);   
+    //div.appendChild(kep);   
     var kep = document.createElement("img");
     kep.className = "alsokep";
-    kep.id = varAdatok[i].id;
+    //kep.id = varAdatok[i].id;
     //kep.src = "kepek/tornyok/"+varAdatok[i].id+".png";       
-    div.appendChild(kep);
+    //div.appendChild(kep);
     }
 
 function Palki_es_funkcioja(){
@@ -203,8 +202,10 @@ function Palki_es_funkcioja(){
         var kep = document.createElement("img");
         kep.id = "pakli";
         kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
-        kep.src = "kepek/leforditott_kartya.jpg";
+        kep.src = "kepek/lada.png";
         div.appendChild(kep);
+        kartyaBox.innerHTML += "</br>";
+        kartyaBox.innerHTML += "Kattints a kártya húzáshoz!";
     }
     
 }
@@ -245,6 +246,48 @@ function Lerak(vmezo) {
     vmezo.onclick = "";
 }
 
+function VarakLe_Fel()
+{
+
+    for(var i = 0;i<4;i++)
+    {
+        var div = document.getElementById("kartyaTarto");
+        var kep = document.createElement("img");
+        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.src = "kepek/tornyok/1.png";
+        kep.className = "kicsi";
+        div.appendChild(kep);
+    }
+
+    for(var i = 0;i<3;i++)
+    {
+        var div = document.getElementById("kartyaTarto");
+        var kep = document.createElement("img");
+        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.src = "kepek/tornyok/2.png";
+        kep.className = "kicsi";
+        div.appendChild(kep);
+    }
+    for(var i = 0;i<2;i++)
+    {
+        var div = document.getElementById("kartyaTarto");
+        var kep = document.createElement("img");
+        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.src = "kepek/tornyok/3.png";
+        kep.className = "kicsi";
+        div.appendChild(kep);
+    }
+        var div = document.getElementById("kartyaTarto");
+        var kep = document.createElement("img");
+        kep.setAttribute("onclick","VarFelhuzas(this)");
+        kep.src = "kepek/tornyok/4.png";
+        kep.className = "kicsi";
+        div.appendChild(kep);
+
+    console.log("ez egy hulladék fos?");
+
+}
+
 function Main()
 {
     JatekterBetoltes();
@@ -257,6 +300,7 @@ function Main()
 	//OszlopOsszeg(cellak);
     Palki_es_funkcioja();
     KartyakBetetele();
+    VarakLe_Fel();
 }
 
 Main();

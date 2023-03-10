@@ -62,6 +62,9 @@ var lepes = 0;
 var valasztottkartya;
 var felhuzva = false;
 var kivalsztottlap;
+var leszamoloslista = new Array(30);
+var lerakottkartyakszama = 0;
+var lerakottvarakszama = 0;
 
 function JatekterBetoltes()
 {
@@ -104,7 +107,7 @@ function TablaGeneralas()
         }
         tabla.appendChild(sorDiv);
     }
-    console.log(cellak);
+    //console.log(cellak);
 }
 
 function CellakFeltoltese()
@@ -126,31 +129,31 @@ function shuffleArray(cellak) {
     }
 }
 
-function CellakMegjelenitese(){
-    for(var i = 0;i<30;i++)
-    {    
-        var cella = cellak[i];
-        var div = document.getElementById(i+1);
-        var kep = document.createElement("img");
-        if(cella.type == "kártya"){
+// function CellakMegjelenitese(){
+//     for(var i = 0;i<30;i++)
+//     {    
+//         var cella = cellak[i];
+//         var div = document.getElementById(i+1);
+//         var kep = document.createElement("img");
+//         if(cella.type == "kártya"){
 
-            kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
-        }
-        else{
-            kep.src = "kepek/tornyok/"+cella.kartya.id+".png";
-        }
-        div.appendChild(kep);
-    }
-    console.log(cellak);
-}
+//             kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
+//         }
+//         else{
+//             kep.src = "kepek/tornyok/"+cella.kartya.id+".png";
+//         }
+//         div.appendChild(kep);
+//     }
+//     console.log(cellak);
+// }
 
-function SorOsszeg(cellak){
+function SorOsszeg(leszamoloslista){
 	pontokBox.innerHTML += "<br>";
 	for(var i = 0;i<30;i+=6)
     {   
 		var sor = 0; 
 		for(var j = i;j<i+6;j++){
-			var cella = cellak[j];
+			var cella = leszamoloslista[j];
 			sor += cella.kartya.value;
 		}
 		var span = document.createElement("span");
@@ -159,13 +162,13 @@ function SorOsszeg(cellak){
     }
 }
 
-function OszlopOsszeg(cellak){
+function OszlopOsszeg(leszamoloslista){
 	pontokBox.innerHTML += "<br>";
 	for(var i = 0;i<6;i++)
     {   
 		var oszlop = 0; 
 		for(var j = i;j<30;j+=6){
-			var cella = cellak[j];
+			var cella = leszamoloslista[j];
 			oszlop += cella.kartya.value;
 		}
 		var span = document.createElement("span");
@@ -232,28 +235,34 @@ function Lerak(vmezo) {
     var valkep = document.createElement("img");
     if(kivalsztottlap.type == "kártya"){
         valkep.src = "kepek/Lapok/" + kivalsztottlap.kartya.id + ".png";
+        leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
+        lerakottkartyakszama++;
     }
     else{
         console.log(kivalsztottlap.id + "ezt kell figyelni");
         valkep.src = "kepek/tornyok/"+(kivalsztottlap.id)+".png";
+        leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
+        lerakottvarakszama++;
     }
     vmezo.appendChild(valkep);  
     valasztottkartya = undefined; 
     kivalsztottlap = undefined;
     vmezo.onclick = "";
+    console.log(leszamoloslista);
 }
 
 function VarFelhuzas(n)
 {
     kivalsztottlap = varAdatok[n];
+    
     console.log(kivalsztottlap);
 }
 
 function VarakLe_Fel()
 {
-    for(var i = 0;i<4;i++)
+    for(var i = 0;i<10;i++)
     {
         var div = document.getElementById("kartyaTarto");
         var kep = document.createElement("img");
@@ -289,6 +298,14 @@ function VarakLe_Fel()
     console.log("ez egy hulladék fos?");
 }
 
+function JatekVegeLeszamolas(){
+    console.log(lerakottkartyakszama);
+    console.log(lerakottvarakszama);
+    if(lerakottkartyakszama == 23 && lerakottvarakszama == 7){
+        console.log("JÁTÉK VÉGE");
+    }
+}
+
 function Main()
 {
     JatekterBetoltes();
@@ -297,11 +314,14 @@ function Main()
     CellakFeltoltese();
     shuffleArray(cellak);
     //CellakMegjelenitese();
-	//SorOsszeg(cellak);
-	//OszlopOsszeg(cellak);
+	
     Palki_es_funkcioja();
     KartyakBetetele();
     VarakLe_Fel();
+    // SorOsszeg(leszamoloslista);
+	// OszlopOsszeg(leszamoloslista);
+    JatekVegeLeszamolas();
+    
 }
 
 Main();

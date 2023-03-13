@@ -1,6 +1,6 @@
 body{
     /*background-color: darkgoldenrod;*/
-    background-image: url("kepek/hatterek/hatter.png");
+
     background-repeat:no-repeat;
     background-size: cover;
     
@@ -41,7 +41,7 @@ body{
 #pontokbox{
     border: 1px solid blue;
     height: 20vw;
-    background-image: url("kepek/hatterek/pontokhatter.png");
+
     background-repeat: no-repeat;
     background-size: cover;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -59,7 +59,7 @@ body{
     width: 20%;
     border: 1px solid yellow;
     height: 40vw;
-    background-image: url("kepek/hatterek/korokhatter.png");
+
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
@@ -108,4 +108,17 @@ img{
     width: 100px;
     height: 100px;
     border: 2px solid blue;
+}
+
+#varak{
+    background-color: #28ad23;
+    float:right;
+    width: 50%;
+    height: 100%;
+}
+#kez{
+    background-color: aqua;
+    float: left;
+    width:50%;
+    height: 100%;
 }

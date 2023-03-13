@@ -129,35 +129,26 @@ function shuffleArray(cellak) {
     }
 }
 
-// function CellakMegjelenitese(){
-//     for(var i = 0;i<30;i++)
-//     {    
-//         var cella = cellak[i];
-//         var div = document.getElementById(i+1);
-//         var kep = document.createElement("img");
-//         if(cella.type == "kártya"){
 
-//             kep.src = "kepek/Lapok/"+cella.kartya.id+".png";
-//         }
-//         else{
-//             kep.src = "kepek/tornyok/"+cella.kartya.id+".png";
-//         }
-//         div.appendChild(kep);
-//     }
-//     console.log(cellak);
-// }
 
 function SorOsszeg(leszamoloslista){
 	pontokBox.innerHTML += "<br>";
+	console.log(leszamoloslista);
 	for(var i = 0;i<30;i+=6)
     {   
+        var varakosszege = 0;
 		var sor = 0; 
 		for(var j = i;j<i+6;j++){
 			var cella = leszamoloslista[j];
-			sor += cella.kartya.value;
+            if(cella.type == "kártya"){
+                sor += cella.kartya.value;
+            }
+            else{
+                varakosszege += cella.value;
+            }
 		}
 		var span = document.createElement("span");
-		span.innerHTML = sor+", ";		
+		span.innerHTML += (sor*varakosszege)+", ";		
 		pontokBox.appendChild(span);
     }
 }
@@ -167,18 +158,24 @@ function OszlopOsszeg(leszamoloslista){
 	for(var i = 0;i<6;i++)
     {   
 		var oszlop = 0; 
+        var varakosszege = 0;
 		for(var j = i;j<30;j+=6){
 			var cella = leszamoloslista[j];
-			oszlop += cella.kartya.value;
+			if(cella.type == "kártya"){
+                oszlop += cella.kartya.value;
+            }
+            else{
+                varakosszege += cella.value;
+            }
 		}
 		var span = document.createElement("span");
-		span.innerHTML = oszlop+", ";
+		span.innerHTML = (oszlop*varakosszege)+", ";
 		pontokBox.appendChild(span);
     }
 }
 
 function KartyakBetetele(){
-    var div = document.getElementById("kartyaTarto"); 
+
     var kep = document.createElement("img");
     kep.setAttribute("onclick","Kivalasztas(this)");
     kep.className = "alsokep";  
@@ -213,7 +210,7 @@ function RandomKartyaGeneralas() {
             var kep = document.getElementById("pakli");
             kep.onclick = "";
         }
-        var div = document.getElementById("kartyaTarto");
+        var div = document.getElementById("kez");
         valkep.className = "kicsi";
         kivalsztottlap = cellak[lepes];
         console.log(kivalsztottlap);
@@ -221,7 +218,7 @@ function RandomKartyaGeneralas() {
         div.appendChild(valkep);
         
         lepes++;
-        console.log(lepes);
+        //console.log(lepes);
     }
     else{
         console.log("előbb rakd le a lapodat")
@@ -238,9 +235,10 @@ function Lerak(vmezo) {
         leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
         lerakottkartyakszama++;
+        kez.innerHTML = "";
     }
     else{
-        console.log(kivalsztottlap.id + "ezt kell figyelni");
+        //console.log(kivalsztottlap.id + "ezt kell figyelni");
         valkep.src = "kepek/tornyok/"+(kivalsztottlap.id)+".png";
         leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
@@ -251,47 +249,52 @@ function Lerak(vmezo) {
     kivalsztottlap = undefined;
     vmezo.onclick = "";
     console.log(leszamoloslista);
+    JatekVegeLeszamolas();
 }
 
-function VarFelhuzas(n)
+function VarFelhuzas(n,img)
 {
+    var div = document.getElementById("kez");
     kivalsztottlap = varAdatok[n];
-    
+    div.appendChild(img);
+    img.className = "elrejt";
+
     console.log(kivalsztottlap);
+
 }
 
 function VarakLe_Fel()
 {
     for(var i = 0;i<10;i++)
     {
-        var div = document.getElementById("kartyaTarto");
+        var div = document.getElementById("varak");
         var kep = document.createElement("img");
         kep.src = "kepek/tornyok/1.png";
         kep.className = "kicsi";
-        kep.setAttribute("onclick","VarFelhuzas(0)"); // 0 kell indítani az indexelést 
+        kep.setAttribute("onclick","VarFelhuzas(0,this)"); // 0 kell indítani az indexelést 
         div.appendChild(kep);
     }
     for(var i = 0;i<3;i++)
     {
-        var div = document.getElementById("kartyaTarto");
+        var div = document.getElementById("varak");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(1)");
+        kep.setAttribute("onclick","VarFelhuzas(1,this)");
         kep.src = "kepek/tornyok/2.png";
         kep.className = "kicsi";
         div.appendChild(kep);
     }
     for(var i = 0;i<2;i++)
     {
-        var div = document.getElementById("kartyaTarto");
+        var div = document.getElementById("varak");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(2)");
+        kep.setAttribute("onclick","VarFelhuzas(2,this)");
         kep.src = "kepek/tornyok/3.png";
         kep.className = "kicsi";
         div.appendChild(kep);
     }
-        var div = document.getElementById("kartyaTarto");
+        var div = document.getElementById("varak");
         var kep = document.createElement("img");
-        kep.setAttribute("onclick","VarFelhuzas(3)");
+        kep.setAttribute("onclick","VarFelhuzas(3,this)");
         kep.src = "kepek/tornyok/4.png";
         kep.className = "kicsi";
         div.appendChild(kep);
@@ -301,8 +304,10 @@ function VarakLe_Fel()
 function JatekVegeLeszamolas(){
     console.log(lerakottkartyakszama);
     console.log(lerakottvarakszama);
-    if(lerakottkartyakszama == 23 && lerakottvarakszama == 7){
-        console.log("JÁTÉK VÉGE");
+    if(lerakottkartyakszama + lerakottvarakszama == 30){
+        console.log("KÖR VÉGE");
+        SorOsszeg(leszamoloslista);
+	    OszlopOsszeg(leszamoloslista);
     }
 }
 
@@ -320,7 +325,7 @@ function Main()
     VarakLe_Fel();
     // SorOsszeg(leszamoloslista);
 	// OszlopOsszeg(leszamoloslista);
-    JatekVegeLeszamolas();
+    
     
 }
 

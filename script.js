@@ -65,6 +65,7 @@ var kivalsztottlap;
 var leszamoloslista = new Array(30);
 var lerakottkartyakszama = 0;
 var lerakottvarakszama = 0;
+var kor = 1;
 
 function JatekterBetoltes()
 {
@@ -73,11 +74,9 @@ function JatekterBetoltes()
     jatekTer.appendChild(balPanel);
     jatekTer.appendChild(tabla);
     jatekTer.appendChild(korokBox);
-    // jatekTer.appendChild(kartyaTarto);
-    pontokBox.innerHTML = "pontokBox";
-    korokBox.innerHTML = "korokBox";
-    
-
+    korokBox.innerHTML += "<div id = 'kor1' class = 'korkiemeles'>Kör 1.</div>"
+    korokBox.innerHTML += "<div id = 'kor2' class = 'kor'>Kör 2.</div>"
+    korokBox.innerHTML += "<div id = 'kor3' class = 'kor'>Kör 3.</div>" 
 }
 function JatekterElrendezes()
 {
@@ -250,6 +249,7 @@ function Lerak(vmezo) {
     vmezo.onclick = "";
     console.log(leszamoloslista);
     JatekVegeLeszamolas();
+    
 }
 
 function VarFelhuzas(n,img)
@@ -308,6 +308,50 @@ function JatekVegeLeszamolas(){
         console.log("KÖR VÉGE");
         SorOsszeg(leszamoloslista);
 	    OszlopOsszeg(leszamoloslista);
+        Körök();
+        var div = document.getElementById("varak");
+        div.innerHTML = "";
+        VarakLe_Fel();
+    }
+    
+    
+}
+
+function Körök(){
+    lerakottkartyakszama = 0;
+    lerakottvarakszama = 0;
+    felhuzva = false;
+    lepes = 0;
+    leszamoloslista = new Array(30);
+    for(let i = 1;i<31;i++){
+        var mezo = document.getElementById(i);
+        mezo.innerHTML = "";
+        mezo.setAttribute("onclick","Lerak(this)");
+    }
+    kor++;
+    
+    console.log("lefutott a Körök()");
+    KörökLépesDesign();
+}
+
+function KörökLépesDesign(){
+    var div1 = document.getElementById("kor1");
+    var div2 = document.getElementById("kor2");
+    var div3 = document.getElementById("kor3");
+    console.log("a cigányok nem emberek");
+    if(kor == 1){
+        div1.className="korkiemeles";
+    }
+    if(kor == 2){
+        div1.className="kor";
+        div2.className="korkiemeles";
+    }
+    if(kor == 3){
+        div2.className="kor";
+        div3.className="korkiemeles";
+    }
+    if(kor== 4){
+        div3.className="kor";
     }
 }
 
@@ -317,16 +361,10 @@ function Main()
     JatekterElrendezes();
     TablaGeneralas();
     CellakFeltoltese();
-    shuffleArray(cellak);
-    //CellakMegjelenitese();
-	
+    shuffleArray(cellak);	
     Palki_es_funkcioja();
     KartyakBetetele();
     VarakLe_Fel();
-    // SorOsszeg(leszamoloslista);
-	// OszlopOsszeg(leszamoloslista);
-    
-    
 }
 
 Main();

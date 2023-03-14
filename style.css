@@ -122,3 +122,18 @@ img{
     width:50%;
     height: 100%;
 }
+
+.korkiemeles{
+    width: 100%;
+    text-align: center;
+    padding: 31.6% 0;
+    background-color: red;
+}
+
+.kor{
+    width: 100%;
+
+    text-align: center;
+    padding: 31.6% 0;
+    background-color: brown;
+}

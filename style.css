@@ -3,21 +3,22 @@ body{
 
     background-repeat:no-repeat;
     background-size: cover;
+    border: 5px grey;
     
 }
 
 #jatekter{
     width: 100%;
-    border: 1px solid black;
+    border: 5px grey;
     display: flex;
     flex-direction: row;
     height: 40vw;
-    background-color: bisque;
+    background-color: grey;
     
 }
 
 #kartyaTarto{
-    border: 3px solid black;
+
     height: 20vw;
     background-color: #9fcfbb;
 
@@ -26,11 +27,11 @@ body{
 
 #balpanel{
     width: 30%;
-    border: 1px solid orange;
+
     height: 40vw;
 }
 #kartyabox{
-    border: 1px solid red;
+
     height: 20vw;
     background-image: url("kepek/kartyak_hatter.jpg");
     background-size:cover;
@@ -39,16 +40,16 @@ body{
     
 }
 #pontokbox{
-    border: 1px solid blue;
+    border: 5px grey;
     height: 20vw;
-    background-repeat: no-repeat;
+    background-image: url("kepek/ermek_hatter.png");
     background-size: cover;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
 }
 #tabla{
     width: 50%;
-    border: 1px solid green;
+    border: 5px grey;
     height: 40vw;
     display: flex;
     flex-direction: column;
@@ -56,7 +57,7 @@ body{
 }
 #korokbox{
     width: 20%;
-    border: 1px solid yellow;
+    border: 5px grey;
     height: 40vw;
 
     background-repeat: no-repeat;
@@ -106,34 +107,60 @@ img{
     float: left;
     width: 100px;
     height: 100px;
-    border: 2px solid blue;
 }
 
-#varak{
-    background-color: #28ad23;
-    float:right;
-    width: 50%;
+#varakkerete{
+
+    float: right;
+    border: 5px grey;
+    width:50%;
     height: 100%;
+    background-image: url("kepek/kez_hatter.jpg");
+    background-size: contain;
 }
-#kez{
-    background-color: aqua;
+#varak{
+    padding-top: 8%;
+    padding-left: 5%;
+    padding-right: 15%;
+    width: 90%;
+    padding-left: 20% 0;
+}
+#kezkerete{
+
     float: left;
     width:50%;
     height: 100%;
+    background-image: url("kepek/kez_hatter.jpg");
+    background-size: contain;
+}
+#kez{
+    padding-top: 8%;
+    padding-left: 38%;
+    width: 25%;
+    padding-left: 20% 0;
+}
+
+.kezbelnlevokep{
+    height: 60%;
+    width:60%;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: rgb( 64, 0, 0);
 }
 
 .korkiemeles{
     width: 100%;
     text-align: center;
-    padding: 31.6% 0;
-    background-color: red;
+    padding: 31.25% 0;
+    border: 2px black;
+    background-color: lightgray;
 }
 
 .kor{
     width: 100%;
     text-align: center;
-    padding: 31.6% 0;
-    background-color: brown;
+    padding: 31.25% 0;
+    background-color: grey;
 }
 
 .erme{

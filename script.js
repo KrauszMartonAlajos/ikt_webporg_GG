@@ -213,7 +213,6 @@ function OszlopOsszeg(leszamoloslista){
 function KartyakBetetele(){
     var kep = document.createElement("img");
     kep.setAttribute("onclick","Kivalasztas(this)");
-    kep.className = "alsokep";  
     var kep = document.createElement("img");
     kep.className = "alsokep";
     }
@@ -241,7 +240,7 @@ function RandomKartyaGeneralas() {
             kep.onclick = "";
         }
         var div = document.getElementById("kez");
-        valkep.className = "kicsi";
+        valkep.className = "kezbenlevokep";
         kivalsztottlap = cellak[lepes];
         console.log(kivalsztottlap);
         valkep.src = "kepek/lapok/" + cellak[lepes].kartya.id + ".png";
@@ -349,6 +348,7 @@ function JatekVegeLeszamolas(){
         div.innerHTML = "";
         VarakLe_Fel();
         console.log("ÖSSZESÍTETT PONTOK EDDIG:",osszpont);
+        shuffleArray(cellak);
         PenzSzamolas();
     }
     
@@ -368,6 +368,7 @@ function Körök(){
         var mezo = document.getElementById(i);
         mezo.innerHTML = "";
         mezo.setAttribute("onclick","Lerak(this)");
+        
     }
     kor++;
     
@@ -478,6 +479,7 @@ Funikciók:
 Be lehet pakolni a felhúzott kártyákat
 A 23 lapot a pakliból lehet véletlen szerűen felhúzni (körönként újra generálódik)
 A várak alúra kerülnek ki sorban és onnan lehet őket elhelyezni(körönként újra generálódnak)
+Körönként újra keveri a paklit
 Amikor a körnek vége leszámolja a sorokat és oszlopokat (*hiány*)
 Ezeket aztán átszmáloja egy közös összegbe majd azt érmékké számolja 
 Ezekből az érmékből a megfelelő mennyiségű darabot generálja bele a pontok div-jébe

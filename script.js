@@ -63,6 +63,9 @@ var lerakottvarakszama = 0;
 var kor = 1;
 var osszpont = 0;
 
+// var vanevarakezemben = false;
+// var vanelapakezemben = false;
+
 function JatekterBetoltes()
 {
     balPanel.appendChild(kartyaBox);
@@ -70,9 +73,9 @@ function JatekterBetoltes()
     jatekTer.appendChild(balPanel);
     jatekTer.appendChild(tabla);
     jatekTer.appendChild(korokBox);
-    korokBox.innerHTML += "<div id = 'kor1' class = 'korkiemeles'>Kör 1.</div>"
-    korokBox.innerHTML += "<div id = 'kor2' class = 'kor'>Kör 2.</div>"
-    korokBox.innerHTML += "<div id = 'kor3' class = 'kor'>Kör 3.</div>" 
+    korokBox.innerHTML += "<div id = 'kor1' class = 'korkiemeles'>Kör 1.</div>";
+    korokBox.innerHTML += "<div id = 'kor2' class = 'kor'>Kör 2.</div>";
+    korokBox.innerHTML += "<div id = 'kor3' class = 'kor'>Kör 3.</div>" ;
 }
 function JatekterElrendezes()
 {
@@ -208,7 +211,6 @@ function OszlopOsszeg(leszamoloslista){
 }
 
 function KartyakBetetele(){
-
     var kep = document.createElement("img");
     kep.setAttribute("onclick","Kivalasztas(this)");
     kep.className = "alsokep";  
@@ -217,18 +219,14 @@ function KartyakBetetele(){
     }
 
 function Palki_es_funkcioja(){
-    if(felhuzva == false)
-    {
-        var div = document.getElementById("kartyabox");
-        var kep = document.createElement("img");
-        kep.id = "pakli";
-        kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
-        kep.src = "kepek/lada.png";
-        div.appendChild(kep);
-        kartyaBox.innerHTML += "</br>";
-        kartyaBox.innerHTML += "Kattints a kártya húzáshoz!";
-    }
-    
+    var div = document.getElementById("kartyabox");
+    var kep = document.createElement("img");
+    kep.id = "pakli";
+    kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
+    kep.src = "kepek/lada.png";
+    div.appendChild(kep);
+    kartyaBox.innerHTML += "</br>";
+    kartyaBox.innerHTML += "Kattints a kártya húzáshoz!";  
 }
 
 function RandomKartyaGeneralas() { 
@@ -260,7 +258,9 @@ function Lerak(vmezo) {
     
     felhuzva = false;
     var valkep = document.createElement("img");
+    
     if(kivalsztottlap.type == "kártya"){
+        
         valkep.src = "kepek/lapok/" + kivalsztottlap.kartya.id + ".png";
         leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
@@ -285,13 +285,19 @@ function Lerak(vmezo) {
 
 function VarFelhuzas(n,img)
 {
-    var div = document.getElementById("kez");
-    kivalsztottlap = varAdatok[n];
-    div.appendChild(img);
-    img.className = "elrejt";
-
-    console.log(kivalsztottlap);
-
+    console.log("!!!:"+felhuzva);
+    //ide kell a van e a kezemben
+    if(felhuzva == false){
+        var div = document.getElementById("kez");
+        kivalsztottlap = varAdatok[n];
+        div.appendChild(img);
+        img.className = "elrejt";
+        felhuzva = true;
+        console.log(kivalsztottlap);
+    }
+    else{
+        console.log("MÁR VAN LAP A KEZEDBEN");
+    }
 }
 
 function VarakLe_Fel()
@@ -355,6 +361,9 @@ function Körök(){
     felhuzva = false;
     lepes = 0;
     leszamoloslista = new Array(30);
+    vanelapakezemben = false;
+    vanevarakezemben = false;
+    
     for(let i = 1;i<31;i++){
         var mezo = document.getElementById(i);
         mezo.innerHTML = "";

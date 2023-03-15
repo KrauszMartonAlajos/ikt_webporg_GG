@@ -246,7 +246,7 @@ function RandomKartyaGeneralas() {
         valkep.className = "kicsi";
         kivalsztottlap = cellak[lepes];
         console.log(kivalsztottlap);
-        valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
+        valkep.src = "kepek/lapok/" + cellak[lepes].kartya.id + ".png";
         div.appendChild(valkep);       
         lepes++;
     }
@@ -261,7 +261,7 @@ function Lerak(vmezo) {
     felhuzva = false;
     var valkep = document.createElement("img");
     if(kivalsztottlap.type == "kártya"){
-        valkep.src = "kepek/Lapok/" + kivalsztottlap.kartya.id + ".png";
+        valkep.src = "kepek/lapok/" + kivalsztottlap.kartya.id + ".png";
         leszamoloslista.splice(vmezo.id-1,1,kivalsztottlap);
         kivalsztottlap = undefined;
         lerakottkartyakszama++;

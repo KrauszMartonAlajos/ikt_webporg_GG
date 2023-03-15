@@ -1,10 +1,11 @@
 var jatekTer = document.getElementById("jatekter");
-
 var balPanel = document.createElement("div");
 var kartyaBox = document.createElement("div");
 var pontokBox = document.createElement("div");
 var tabla = document.createElement("div");
 var korokBox = document.createElement("div");
+
+//létre hozom a diveket
 
 var kartyaAdatok =[
 {id:1,value:1,sign:''},
@@ -49,9 +50,9 @@ var varAdatok =[
 {id:15,color:4,value:3},
 {id:16,color:4,value:4}];
 
-var cellak = [
-];
+// definiálom a lapokat érték és szín szerint 
 
+var cellak = [];
 var varak = [];
 var lepes = 0;
 var valasztottkartya;
@@ -63,8 +64,7 @@ var lerakottvarakszama = 0;
 var kor = 1;
 var osszpont = 0;
 
-// var vanevarakezemben = false;
-// var vanelapakezemben = false;
+//globális változók létrehozása
 
 function JatekterBetoltes()
 {
@@ -73,10 +73,19 @@ function JatekterBetoltes()
     jatekTer.appendChild(balPanel);
     jatekTer.appendChild(tabla);
     jatekTer.appendChild(korokBox);
+
+    //rész divek hozzá adása: kartyabox, pontokbox, 
+    //és a játéktérbe betenni a balpanelt a játék táblát és a körökbox-ot
+
     korokBox.innerHTML += "<div id = 'kor1' class = 'korkiemeles'>Kör 1.</div>";
     korokBox.innerHTML += "<div id = 'kor2' class = 'kor'>Kör 2.</div>";
     korokBox.innerHTML += "<div id = 'kor3' class = 'kor'>Kör 3.</div>" ;
+
+    //körökboxban létre hoztam 3 divet azok fogják mutatni az aktuális kört
 }
+
+
+
 function JatekterElrendezes()
 {
     balPanel.id = "balpanel";
@@ -85,23 +94,28 @@ function JatekterElrendezes()
     tabla.id = "tabla";
     korokBox.id = "korokbox";
 }
+
+//id-val látom el a játék mezőit
+
+
 function TablaGeneralas()
 {
     var k = 1;
-    for(var i = 0; i < 5; i++)
+    //1ről indul a k
+    for(var i = 0; i < 5; i++) //végig megyünk az öt soron
     {
-        var sorDiv = document.createElement("div");
-        sorDiv.classList += " sordiv";
-        for(var j = 0; j<6;j++)
+        var sorDiv = document.createElement("div"); //létre hozzuk a sorokat
+        sorDiv.classList += " sordiv"; //majd adunk neki class-t
+        for(var j = 0; j<6;j++) // oszlopok létrehozása
         {
-            var oszlopDiv = document.createElement("div");
-            oszlopDiv.classList += " oszlopdiv";
-            oszlopDiv.id = k;
-            oszlopDiv.setAttribute("onclick","Lerak(this)");
-            k++;
-            sorDiv.appendChild(oszlopDiv);
+            var oszlopDiv = document.createElement("div"); //mező létrehozása
+            oszlopDiv.classList += " oszlopdiv"; //adunk neki classt
+            oszlopDiv.id = k; //az id-ja a k lesz így 1-30ig lesznek számozva a mezők
+            oszlopDiv.setAttribute("onclick","Lerak(this)"); //meghivjuk rá a lerakás funkciót kattintáskor
+            k++; // növeljük a k-t
+            sorDiv.appendChild(oszlopDiv); //a sorba bele tesszük a mezőket
         }
-        tabla.appendChild(sorDiv);
+        tabla.appendChild(sorDiv); //végül mindent a táblába teszünk
     }
 }
 
@@ -109,34 +123,36 @@ function CellakFeltoltese()
 {    
     for(let i = 1;i<24;i++)
     {   
-        cellak.push({id:i});
-        cellak[i-1].type = "kártya";
-        cellak[i-1].kartya = kartyaAdatok[i-1];
+        cellak.push({id:i}); //sorban adunk nekik id-t 1-23 ig
+        cellak[i-1].type = "kártya"; // megadjuk a típusát ami kártya
+        cellak[i-1].kartya = kartyaAdatok[i-1]; //a kártya adatok mezőből kivesszük a lapot
     }
 }
+//a cellák lista fogja tartalmazni a 23 lapot egy ciklus segítségével feltöltjük ezt
+
 //cellák tömb megkeverése
 function shuffleArray(cellak) {
-    for (var i = cellak.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = cellak[i];
-        cellak[i] = cellak[j];
-        cellak[j] = temp;
+    for (var i = cellak.length - 1; i > 0; i--) { //a cellák lista hosszától megyünk 0-ig egyesével vissza fele
+        var j = Math.floor(Math.random() * (i + 1)); //generálunk egy random számot
+        var temp = cellak[i]; //az aktuális elemunket kimentük ami a cellak[i]
+        cellak[i] = cellak[j]; //a cellak[i]-t megcseréljük a cellak[veletlenszerű] elemére
+        cellak[j] = temp; //majd ezt betesszük az ideiglenes változóba
     }
 }
 
-function SorOsszeg(leszamoloslista){
-	pontokBox.innerHTML += "<br>";
-	console.log(leszamoloslista);
-	for(var i = 0;i<30;i+=6)
+function SorOsszeg(leszamoloslista){ //paramétere a leszamoloslista
+	pontokBox.innerHTML += "<br>"; //sortorés
+	console.log(leszamoloslista); //ki íratjuk a listát amiben az elemek vannak sorban minden adattukkal együt
+	for(var i = 0;i<30;i+=6) //ciklus 6-osával lépkedünk minden sorban így rálépunk az 0, 5, 12, 18, 24-re
     {   
-        var varakosszege = 0;
-		var sor = 0; 
-        let taliga = false;
-		for(var j = i;j<i+6;j++){
-			var cella = leszamoloslista[j];
-            if(cella.type == "kártya"){
+        var varakosszege = 0; //varak osszeét kell vizsgáljuk
+		var sor = 0; //majd a sorok összegét is
+        let taliga = false; //vizsgáljuk hogy van e taliga így fogjuk késöbb eldönteni
+		for(var j = i;j<i+6;j++){ //a j-t az i-ről indítjuk hogy minden sor ban 6-ot lépjen a fentebb említett összegek+6-ig
+			var cella = leszamoloslista[j]; //kimentjük a vizsgált értéket hogy rövidebben lehessen rá hivatkozni
+            if(cella.type == "kártya"){ // ha a cella típusa kártya akkor ezt kell vizsgálni
                 
-                if(cella.kartya.sign == 'taliga'){
+                if(cella.kartya.sign == 'taliga'){ //meg nézzük higy a kartya.sign taliga e ha igen akkor nem nézünk valuet mivel az 0 de jelezzük hogy találtunk taligát a sorban
                     taliga = true;
                 }
                 // else if(cella.kartya.sign == 'varazslo'){
@@ -159,73 +175,71 @@ function SorOsszeg(leszamoloslista){
                 //     }
                 // }
                 else{
-                    sor += cella.kartya.value;
+                    sor += cella.kartya.value; //különben csak hozzá adjuk a sorhoz a kártya értékét
                 }
             }
             
             else{
-                varakosszege += cella.value;
+                varakosszege += cella.value; //különben várről beszélünk azt hozzá adjuk a várakösszegéhez
             }
 		}
-		var span = document.createElement("span");
+		var span = document.createElement("span"); // létre hozunk egy spant ahova pakoljuk az összeget(ez nem lesz később használva csak ha negatívba megy a pénz***)
         if(taliga){
-            sor*=2;
+            sor*=2; //itt ha találtunk taligát akkor annak a sor lapjainak összegét meg kétszerezzük
         }
-        osszpont += (sor*varakosszege);
-		span.innerHTML += (sor*varakosszege)+", ";		
-		pontokBox.appendChild(span);
+        osszpont += (sor*varakosszege); //vizsgálunk egy össze pontot amivel később az érméket számoljuk ki
+		span.innerHTML += (sor*varakosszege)+", ";	//span ba pakolás (***)
+		pontokBox.appendChild(span); //be tesszük a divbe a spant
     }
 }
 
-function OszlopOsszeg(leszamoloslista){
-	pontokBox.innerHTML += "<br>";
-	for(var i = 0;i<6;i++)
+function OszlopOsszeg(leszamoloslista){ //paramétere a leszamoloslista
+	pontokBox.innerHTML += "<br>"; //sortörés
+	for(var i = 0;i<6;i++) //0-tól 5-ig az az a 6 oszlopon megyünk végig
     {   
-		var oszlop = 0; 
-        var varakosszege = 0;
-        let taliga = false;
-		for(var j = i;j<30;j+=6){
-			var cella = leszamoloslista[j];
-			if(cella.type == "kártya"){
-                if(cella.kartya.sign == 'taliga'){
+        var varakosszege = 0;//varak osszeét kell vizsgáljuk
+		var oszlop = 0; //majd a oszlopok összegét is
+        let taliga = false; //taligát találtunk e késöbb ezzel vizsgáljuk 
+		for(var j = i;j<30;j+=6){ //a j-t ismét i-ről indítjuk 30nál meg áll mivel az az utlosó mező 6-val lépkedünk
+			var cella = leszamoloslista[j]; //kimenjük hogy rövidebben lehessen rá hivatkozni
+			if(cella.type == "kártya"){ //ha kártya akkor úgy kezeljük
+                if(cella.kartya.sign == 'taliga'){ //ha taliga akkor igazra állítjuk a taliga változót
                     taliga = true;
                 }
                 
                 else{
-                    oszlop += cella.kartya.value;
+                    oszlop += cella.kartya.value; //ha nem az akkor csak simán adjuk az oszlop osszeghez a kartya erteket
                 }
                 
             }
             else{
-                varakosszege += cella.value;
+                varakosszege += cella.value; //ha nem lap akkor vár így azt a vár összeghez adjuk
             }
 		}
-		var span = document.createElement("span");
+		var span = document.createElement("span"); //span létrehozása
         if(taliga){
-            oszlop*=2;
+            oszlop*=2; //ha van taliga akkor az oszlopban lévő lapok összegét duplázzuk
         }
-        osszpont += (oszlop*varakosszege);
-		span.innerHTML = (oszlop*varakosszege)+", ";
-		pontokBox.appendChild(span);
+        osszpont += (oszlop*varakosszege); //ezt is hozzá adjuk az összes ponthoz amivel később az érméket osztjuk majd ki
+		span.innerHTML = (oszlop*varakosszege)+", "; //...
+		pontokBox.appendChild(span);//...
     }
 }
 
-function KartyakBetetele(){
-    var kep = document.createElement("img");
-    kep.setAttribute("onclick","Kivalasztas(this)");
-    var kep = document.createElement("img");
-    kep.className = "alsokep";
+function KartyakBetetele(){ //kiválasztjuk a kártyát és megadju hogy mit csináljon az onclickje
+    var kep = document.createElement("img"); //létre hozunk egy képet amit késöbb kiválasztunk
+    kep.setAttribute("onclick","Kivalasztas(this)"); //megadjuk neki hogy kattintáskor önmagát hívja meg a kiválsztásba
     }
 
-function Palki_es_funkcioja(){
-    var div = document.getElementById("kartyabox");
-    var kep = document.createElement("img");
-    kep.id = "pakli";
-    kep.setAttribute("onclick","RandomKartyaGeneralas(this)");
-    kep.src = "kepek/lada.png";
-    div.appendChild(kep);
-    kartyaBox.innerHTML += "</br>";
-    kartyaBox.innerHTML += "Kattints a kártya húzáshoz!";  
+function Palki_es_funkcioja(){ //létre hozzuk a paklit
+    var div = document.getElementById("kartyabox"); //kiválasztjuk a divet
+    var kep = document.createElement("img"); //létre hozunk benne egy képet
+    kep.id = "pakli"; //a kép íd-ja pakli később ezzel formázzuk
+    kep.setAttribute("onclick","RandomKartyaGeneralas(this)"); //ha rá kattintunk a "ládára" akkor generál egy random kártyát
+    kep.src = "kepek/lada.png"; //a kép et beszúrjuk a ládáét
+    div.appendChild(kep); //be appendeljuk a ládát a divbe
+    kartyaBox.innerHTML += "</br>"; //sortörés
+    kartyaBox.innerHTML += "Kattints a kártya húzáshoz!";  //utasítás a felhasználónak
 }
 
 function RandomKartyaGeneralas() { 

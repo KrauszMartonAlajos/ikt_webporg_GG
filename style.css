@@ -41,7 +41,6 @@ body{
 #pontokbox{
     border: 1px solid blue;
     height: 20vw;
-
     background-repeat: no-repeat;
     background-size: cover;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -132,8 +131,12 @@ img{
 
 .kor{
     width: 100%;
-
     text-align: center;
     padding: 31.6% 0;
     background-color: brown;
+}
+
+.erme{
+    width:60px;
+    height: 60px;
 }

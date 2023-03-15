@@ -50,11 +50,6 @@ var varAdatok =[
 {id:16,color:4,value:4}];
 
 var cellak = [
-//     {
-//         id: 1,
-//         type: "", //vár, kártya
-//         {/*kartyatartalma*/}
-//     }
 ];
 
 var varak = [];
@@ -66,6 +61,7 @@ var leszamoloslista = new Array(30);
 var lerakottkartyakszama = 0;
 var lerakottvarakszama = 0;
 var kor = 1;
+var osszpont = 0;
 
 function JatekterBetoltes()
 {
@@ -99,14 +95,11 @@ function TablaGeneralas()
             oszlopDiv.classList += " oszlopdiv";
             oszlopDiv.id = k;
             oszlopDiv.setAttribute("onclick","Lerak(this)");
-            //cellak.push({id:k});
-
             k++;
             sorDiv.appendChild(oszlopDiv);
         }
         tabla.appendChild(sorDiv);
     }
-    //console.log(cellak);
 }
 
 function CellakFeltoltese()
@@ -128,8 +121,6 @@ function shuffleArray(cellak) {
     }
 }
 
-
-
 function SorOsszeg(leszamoloslista){
 	pontokBox.innerHTML += "<br>";
 	console.log(leszamoloslista);
@@ -137,16 +128,47 @@ function SorOsszeg(leszamoloslista){
     {   
         var varakosszege = 0;
 		var sor = 0; 
+        let taliga = false;
 		for(var j = i;j<i+6;j++){
 			var cella = leszamoloslista[j];
             if(cella.type == "kártya"){
-                sor += cella.kartya.value;
+                
+                if(cella.kartya.sign == 'taliga'){
+                    taliga = true;
+                }
+                // else if(cella.kartya.sign == 'varazslo'){
+                //     var varazslohelye = j;
+                //     console.log(leszamoloslista[varazslohelye-1]);
+                //     console.log(leszamoloslista[varazslohelye+1]);
+                //     console.log(leszamoloslista[varazslohelye-6]);
+                //     console.log(leszamoloslista[varazslohelye+6]);
+                //     if(leszamoloslista[varazslohelye-1].type=="vár"){
+                //         leszamoloslista[varazslohelye-1].value++;
+                //     }
+                //     if(leszamoloslista[varazslohelye+1].type=="vár"){
+                //         leszamoloslista[varazslohelye+1].value++;
+                //     }
+                //     if(leszamoloslista[varazslohelye-6].type=="vár"){
+                //         leszamoloslista[varazslohelye-6].value++;
+                //     }
+                //     if(leszamoloslista[varazslohelye+6].type=="vár"){
+                //         leszamoloslista[varazslohelye+6].value++;
+                //     }
+                // }
+                else{
+                    sor += cella.kartya.value;
+                }
             }
+            
             else{
                 varakosszege += cella.value;
             }
 		}
 		var span = document.createElement("span");
+        if(taliga){
+            sor*=2;
+        }
+        osszpont += (sor*varakosszege);
 		span.innerHTML += (sor*varakosszege)+", ";		
 		pontokBox.appendChild(span);
     }
@@ -158,16 +180,28 @@ function OszlopOsszeg(leszamoloslista){
     {   
 		var oszlop = 0; 
         var varakosszege = 0;
+        let taliga = false;
 		for(var j = i;j<30;j+=6){
 			var cella = leszamoloslista[j];
 			if(cella.type == "kártya"){
-                oszlop += cella.kartya.value;
+                if(cella.kartya.sign == 'taliga'){
+                    taliga = true;
+                }
+                
+                else{
+                    oszlop += cella.kartya.value;
+                }
+                
             }
             else{
                 varakosszege += cella.value;
             }
 		}
 		var span = document.createElement("span");
+        if(taliga){
+            oszlop*=2;
+        }
+        osszpont += (oszlop*varakosszege);
 		span.innerHTML = (oszlop*varakosszege)+", ";
 		pontokBox.appendChild(span);
     }
@@ -202,7 +236,6 @@ function RandomKartyaGeneralas() {
     {
         felhuzva = true;
         console.log("kattintás regisztrálva:");
-        //felhuzva++;
         var valkep = document.createElement("img");
         if (lepes > 22) { 
             console.log("ennyi kartya volt");
@@ -214,10 +247,8 @@ function RandomKartyaGeneralas() {
         kivalsztottlap = cellak[lepes];
         console.log(kivalsztottlap);
         valkep.src = "kepek/Lapok/" + cellak[lepes].kartya.id + ".png";
-        div.appendChild(valkep);
-        
+        div.appendChild(valkep);       
         lepes++;
-        //console.log(lepes);
     }
     else{
         console.log("előbb rakd le a lapodat")
@@ -298,7 +329,6 @@ function VarakLe_Fel()
         kep.src = "kepek/tornyok/4.png";
         kep.className = "kicsi";
         div.appendChild(kep);
-    console.log("ez egy hulladék fos?");
 }
 
 function JatekVegeLeszamolas(){
@@ -312,6 +342,8 @@ function JatekVegeLeszamolas(){
         var div = document.getElementById("varak");
         div.innerHTML = "";
         VarakLe_Fel();
+        console.log("ÖSSZESÍTETT PONTOK EDDIG:",osszpont);
+        PenzSzamolas();
     }
     
     
@@ -333,12 +365,68 @@ function Körök(){
     console.log("lefutott a Körök()");
     KörökLépesDesign();
 }
+// 100, 50, 10, 5, 1
+function PenzSzamolas(){
+    if(osszpont>0){
+        var szazasok = Math.floor(osszpont/100);
+        console.log("SZÁZASOK:",szazasok);
+        var otvenesek = Math.floor((osszpont-(szazasok*100))/50);
+        console.log("ÖTVENESEK:",otvenesek);
+        var tizesek = Math.floor((osszpont-(szazasok*100)-(otvenesek*50))/10);
+        console.log("TIZESEK:",tizesek);
+        var otosok = Math.floor((osszpont-(szazasok*100)-(otvenesek*50)-(tizesek*10))/5);
+        console.log("ÖTÖSÖK:",otosok);
+        var egyesek = Math.floor(osszpont-(szazasok*100)-(otvenesek*50)-(tizesek*10)-(otosok*5));
+        console.log("EGYESEK:",egyesek);
+        var div_a = document.getElementById("pontokbox");
+        div_a.innerHTML="";
 
+        for(var i = 0;i<szazasok;i++){
+            var div = document.getElementById("pontokbox");
+            var kep = document.createElement("img");
+            kep.src = "kepek/100.png";
+            kep.className = "erme";
+            div.appendChild(kep);
+        }
+        for(var i = 0;i<otvenesek;i++){
+            var div = document.getElementById("pontokbox");
+            var kep = document.createElement("img");
+            kep.src = "kepek/50.png";
+            kep.className = "erme";
+            div.appendChild(kep);
+        }
+        for(var i = 0;i<tizesek;i++){
+            var div = document.getElementById("pontokbox");
+            var kep = document.createElement("img");
+            kep.src = "kepek/10.png";
+            kep.className = "erme";
+            div.appendChild(kep);
+        }
+        for(var i = 0;i<otosok;i++){
+            var div = document.getElementById("pontokbox");
+            var kep = document.createElement("img");
+            kep.src = "kepek/5.png";
+            kep.className = "erme";
+            div.appendChild(kep);
+        }
+        for(var i = 0;i<egyesek;i++){
+            var div = document.getElementById("pontokbox");
+            var kep = document.createElement("img");
+            kep.src = "kepek/1.png";
+            kep.className = "erme";
+            div.appendChild(kep);
+        }
+    }
+    else{
+        console.log("Kevesbb mint 0 a pénzed így nem kapsz érméket :/");
+    }
+    
+}
+var idozito;
 function KörökLépesDesign(){
     var div1 = document.getElementById("kor1");
     var div2 = document.getElementById("kor2");
     var div3 = document.getElementById("kor3");
-    console.log("a cigányok nem emberek");
     if(kor == 1){
         div1.className="korkiemeles";
     }
@@ -352,8 +440,15 @@ function KörökLépesDesign(){
     }
     if(kor== 4){
         div3.className="kor";
+        setTimeout(function() {
+            alert("Játék vége Gratulálok!");
+            location.reload();   
+          }, 2000);          
     }
 }
+
+
+
 
 function Main()
 {
@@ -368,3 +463,19 @@ function Main()
 }
 
 Main();
+
+/*
+Funikciók:
+Be lehet pakolni a felhúzott kártyákat
+A 23 lapot a pakliból lehet véletlen szerűen felhúzni (körönként újra generálódik)
+A várak alúra kerülnek ki sorban és onnan lehet őket elhelyezni(körönként újra generálódnak)
+Amikor a körnek vége leszámolja a sorokat és oszlopokat (*hiány*)
+Ezeket aztán átszmáloja egy közös összegbe majd azt érmékké számolja 
+Ezekből az érmékből a megfelelő mennyiségű darabot generálja bele a pontok div-jébe
+aztán válta a következő körre
+amikor a 3. körnek vége elvégzi a pontozást vár 2 másodpercet majd egy alertel kiírja hogy játék vége majd ha erre rá nyom a felhasználó akkor új játék indul
+
+Hiány:
+A sárkány és a varázsló nem működik
+a varázsló az el lett kezdve de valami hibába ütköztem (fele pont azért mehet rá :))
+*/ 

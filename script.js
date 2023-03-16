@@ -62,7 +62,7 @@ var leszamoloslista = new Array(30);
 var lerakottkartyakszama = 0;
 var lerakottvarakszama = 0;
 var kor = 1;
-var osszpont = 0;
+var osszpont = 50;
 
 //globális változók létrehozása
 
